@@ -13,7 +13,7 @@ import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 import { LOGOUT } from './actions/types';
 import PrivateRoute from './containers/routing/PrivateRoute';
-import Dashboard from './containers/dashboard/Dashboard';
+import Chat from './containers/chat/Chat';
     
 if (localStorage.token) {
   console.log('heyyyyBrother');
@@ -44,7 +44,7 @@ const App = () => {
           <Switch>
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
-            <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute exact path='/chat' component={Chat} />
           </Switch>
         </section>
       </Fragment>
