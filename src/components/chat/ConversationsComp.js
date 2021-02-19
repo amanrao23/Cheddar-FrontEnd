@@ -33,7 +33,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ConversationsComp = ({ conversations }) => {
+const ConversationsComp = ({ conversations, auth }) => {
   const classes = useStyles();
 
   return (
@@ -70,24 +70,30 @@ const ConversationsComp = ({ conversations }) => {
         )}
 
         <List>
-        {conversations.length > 0 ? (
-         
+          {console.log(conversations, 'j')}
+          {
+            conversations.map((conversation)=>{
+              conversation.recipients = conversation.recipients.filter((recipient)=>recipient._id!==auth.user._id)
+            })
+          }
+          {conversations.length > 0 ? (
             conversations.map(conversation => (
-            <ListItem button key={conversation._id}>
-              <ListItemIcon>
-                <Avatar
-                  alt='Remy Sharp'
-                  src='https://material-ui.com/static/images/avatar/1.jpg'
-                />
-              </ListItemIcon>
-              <ListItemText primary={conversation._id}>{conversation._id}</ListItemText>
-              <ListItemText secondary='online' align='right'></ListItemText>
-            </ListItem>
+              <ListItem button key={conversation._id}>
+                <ListItemIcon>
+                  <Avatar
+                    alt='Remy Sharp'
+                    src='https://material-ui.com/static/images/avatar/1.jpg'
+                  />
+                </ListItemIcon>
+                <ListItemText primary={conversation.recipients[0].name}>
+                  {conversation.recipients[0].name}
+                </ListItemText>
+                <ListItemText secondary='online' align='right'></ListItemText>
+              </ListItem>
             ))
-          
-        ) : (
-          <h4>No conversations found...</h4>
-        )}
+          ) : (
+            <h4>No conversations found...</h4>
+          )}
         </List>
       </Grid>
     </Fragment>
@@ -99,8 +105,8 @@ ConversationsComp.propTypes = {};
 export default ConversationsComp;
 
 //  <ListItem button key='Alice'>
-{
-  /* <ListItemIcon>
+
+/* <ListItemIcon>
 <Avatar
   alt='Alice'
   src='https://material-ui.com/static/images/avatar/3.jpg'
@@ -117,4 +123,3 @@ export default ConversationsComp;
 </ListItemIcon>
 <ListItemText primary='Cindy Baker'>Cindy Baker</ListItemText>
 </ListItem> */
-}

@@ -17,6 +17,8 @@ const NewConversation = ({ newConversation, auth, chat }) => {
   const onSubmit = async e => {
     e.preventDefault();
     newConversation({ username });
+    setFormData({ username:'' });
+
   };
 
   return (

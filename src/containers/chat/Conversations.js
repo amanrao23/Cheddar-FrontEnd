@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import ConversationsComp from '../../components/chat/ConversationsComp'
 import { connect } from 'react-redux';
 
-function Conversations({chat}) {
+function Conversations({chat,auth}) {
     return (
-        <ConversationsComp conversations={chat.conversations}></ConversationsComp>
+        <ConversationsComp conversations={chat.conversations} auth={auth}></ConversationsComp>
     )
 }
 
