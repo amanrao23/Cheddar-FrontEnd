@@ -1,10 +1,10 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
 import PropTypes from 'prop-types';
-import LoginComp from '../../components/auth/LoginComp'
+import LoginComp from '../../components/auth/LoginComp';
 
-const Login = ({  login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -17,19 +17,26 @@ const Login = ({  login, isAuthenticated }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    login({email, password});
+    login({ email, password });
   };
 
- return( <LoginComp isAuthenticated={isAuthenticated} formData={formData} onChange={onChange} onSubmit={onSubmit} />)
+  return (
+    <LoginComp
+      isAuthenticated={isAuthenticated}
+      formData={formData}
+      onChange={onChange}
+      onSubmit={onSubmit}
+    />
+  );
 };
 
 login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, {  login })(Login);
+export default connect(mapStateToProps, { login })(Login);
