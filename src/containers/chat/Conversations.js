@@ -1,16 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ConversationsComp from '../../components/chat/ConversationsComp'
+import { connect } from 'react-redux';
 
-function Conversations(props) {
+function Conversations({chat}) {
     return (
-        <ConversationsComp></ConversationsComp>
+        <ConversationsComp conversations={chat.conversations}></ConversationsComp>
     )
 }
 
 Conversations.propTypes = {
 
 }
-
-export default Conversations
+const mapStateToProps = state => ({
+    chat: state.chat,
+    auth: state.auth,
+  });
+  export default connect(mapStateToProps,null)(Conversations);
 

@@ -1,38 +1,32 @@
-import {
-    REGISTER_SUCCESS,
-    //REGISTER_FAIL,
-    USER_LOADED,
-    AUTH_ERROR,
-    LOGIN_SUCCESS,
-    //=LOGIN_FAIL,
-    LOGOUT,
-    
-   
-    ACCOUNT_DELETED
-  } from '../actions/types';
-  
-  const initialState = {
-    conversations:null,
-    events: null,
-    newEvents:null,
-  };
-  
-  function chatReducer(state = initialState, action) {
-    const { type, payload } = action;
-  
-    switch (type) {
-      case USER_LOADED:
+import { NEW_CONVERSATION, GET_CONVERSATIONS } from '../actions/types';
+
+const initialState = {
+  conversations: [],
+  events: null,
+  newEvents: null,
+};
+
+function chatReducer(state = initialState, action) {
+  const { type, payload } = action;
+
+  switch (type) {
+    case GET_CONVERSATIONS:
+      return {
+        ...state,
+        conversations: payload,
+      };
+    case NEW_CONVERSATION: {  
+      state.conversations=state.conversations.filter((conversation) => conversation._id !== payload._id)
+      console.log(payload)
         return {
           ...state,
-          isAuthenticated: true,
-          loading: false,
-          user: payload
+          conversations: [payload, ...state.conversations],
         };
       
-      default:
-        return state;
     }
+    default:
+      return state;
   }
-  
-  export default chatReducer;
-  
+}
+
+export default chatReducer;

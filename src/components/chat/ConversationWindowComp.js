@@ -32,7 +32,7 @@ const ConversationWindowComp = props => {
 
   return (
     <Fragment>
-      <Grid item xs={9}>
+      <Grid item xs={8}>
         <List className={classes.messageArea}>
           <ListItem key='1'>
             <Grid container>

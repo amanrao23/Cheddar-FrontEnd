@@ -4,6 +4,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Conversations from '../../containers/chat/Conversations';
+import NewConversation from '../../containers/chat/NewConversation';
+
 import ConversationWindow from '../../containers/chat/ConversationWindow';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -38,8 +40,10 @@ const ChatComp = props => {
             </Grid>
         </Grid>
         <Grid container component={Paper} className={classes.chatSection}>
+        <NewConversation></NewConversation>
             <Conversations></Conversations>
             <ConversationWindow></ConversationWindow>
+            
         </Grid>
       </div>
     )
