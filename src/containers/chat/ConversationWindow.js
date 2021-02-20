@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 function ConversationWindow({chat}) {
     return (
-       <ConversationWindowComp conversation={chat.conversations}></ConversationWindowComp>
+       <ConversationWindowComp conversation={chat.conversation}></ConversationWindowComp>
     )
 }
 

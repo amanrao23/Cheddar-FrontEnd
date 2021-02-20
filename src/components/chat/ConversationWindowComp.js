@@ -27,10 +27,12 @@ const useStyles = makeStyles({
   },
 });
 
-const ConversationWindowComp = props => {
+const ConversationWindowComp = ({conversation}) => {
   const classes = useStyles();
 
+  if(conversation){
   return (
+
     <Fragment>
       <Grid item xs={8}>
         <List className={classes.messageArea}>
@@ -91,7 +93,12 @@ const ConversationWindowComp = props => {
         </Grid>
       </Grid>
     </Fragment>
-  );
+  );}
+  else{
+    return(
+      <Fragment> No Conversation Selected </Fragment>
+    )
+  }
 };
 
 ConversationWindowComp.propTypes = {};

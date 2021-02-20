@@ -3,19 +3,19 @@ import axios from 'axios';
 
 import { setAlert } from './alert';
 import {
-    GET_CONVERSATIONS,
-    GET_CONVERSATIONS_ERROR,
-    NEW_CONVERSATION,
-    NEW_CONVERSATION_ERROR,
-    SET_CONVERSATION,
-    SET_CONVERSATION_ERROR
+  GET_CONVERSATIONS,
+  GET_CONVERSATIONS_ERROR,
+  NEW_CONVERSATION,
+  NEW_CONVERSATION_ERROR,
+  SET_CONVERSATION,
+  SET_CONVERSATION_ERROR,
+  GET_EVENTS,
+  GET_EVENTS_ERROR,
 } from './types';
 
 // Load User
 export const getConversations = () => async dispatch => {
-  
-
-   try{
+  try {
     const res = await axios.get('/api/user/conversations');
     console.log('load_user()', res.data);
     dispatch({
@@ -30,33 +30,31 @@ export const getConversations = () => async dispatch => {
   }
 };
 
-export const newConversation = (body) => async dispatch => {
+export const newConversation = body => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  
-    try{
-      const res = await axios.post('/api/user/newConversation',body,config);
-      
-     console.log('load_user()', res.data);
-     dispatch({
-       type: NEW_CONVERSATION,
-       payload: res.data,
-     });
-   } catch (err) {
-     console.log('Load_use()', err);
-     dispatch({
-       type: NEW_CONVERSATION_ERROR,
-     });
-   }
- };
 
- export const setConversation = (conversation) => async dispatch => {
-  
+  try {
+    const res = await axios.post('/api/user/newConversation', body, config);
 
-   try{
+    console.log('load_user()', res.data);
+    dispatch({
+      type: NEW_CONVERSATION,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log('Load_use()', err);
+    dispatch({
+      type: NEW_CONVERSATION_ERROR,
+    });
+  }
+};
+
+export const setConversation = conversation => async dispatch => {
+  try {
     dispatch({
       type: SET_CONVERSATION,
       payload: conversation,
@@ -65,6 +63,28 @@ export const newConversation = (body) => async dispatch => {
     console.log(err);
     dispatch({
       type: SET_CONVERSATION_ERROR,
+    });
+  }
+};
+
+export const getEvents = chatId => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const res = await axios.get('/api/event/', chatId, config);
+
+    dispatch({
+      type: GET_EVENTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: GET_EVENTS_ERROR,
     });
   }
 };

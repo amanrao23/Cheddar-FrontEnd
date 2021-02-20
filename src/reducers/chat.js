@@ -1,10 +1,16 @@
-import { NEW_CONVERSATION, GET_CONVERSATIONS,SET_CONVERSATION } from '../actions/types';
+import {
+  NEW_CONVERSATION,
+  GET_CONVERSATIONS,
+  SET_CONVERSATION,
+  GET_EVENTS,
+} from '../actions/types';
 
 const initialState = {
   conversations: [],
   conversation: null,
   events: null,
   newEvents: null,
+  loading: true,
 };
 
 function chatReducer(state = initialState, action) {
@@ -16,20 +22,31 @@ function chatReducer(state = initialState, action) {
         ...state,
         conversations: payload,
       };
-      case SET_CONVERSATION:
+    case SET_CONVERSATION:
       return {
         ...state,
         conversation: payload,
+        loading: false,
       };
-    case NEW_CONVERSATION: {  
-      state.conversations=state.conversations.filter((conversation) => conversation._id !== payload._id)
-      console.log(payload)
-        return {
-          ...state,
-          conversations: [payload, ...state.conversations],
-        };
-      
+    case NEW_CONVERSATION: {
+      state.conversations = state.conversations.filter(
+        conversation => conversation._id !== payload._id
+      );
+      console.log(payload);
+      return {
+        ...state,
+        conversations: [payload, ...state.conversations],
+        loading: false,
+
+      };
     }
+    case GET_EVENTS:
+      return {
+        ...state,
+        events: payload,
+        loading: false,
+
+      };
     default:
       return state;
   }

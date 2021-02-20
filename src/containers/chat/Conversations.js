@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ConversationsComp from '../../components/chat/ConversationsComp';
 import { connect } from 'react-redux';
-import { setConversation } from '../../actions/chat';
+import { setConversation,getEvents } from '../../actions/chat';
 function Conversations({ chat, auth, setConversation }) {
   const onClick = conversation => {
+      
+    getEvents(conversation._id);
     setConversation(conversation);
+   
   };
   return (
     <ConversationsComp
