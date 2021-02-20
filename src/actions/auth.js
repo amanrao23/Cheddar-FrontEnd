@@ -11,7 +11,6 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_PROFILE,
 } from './types';
 
 // Load User
@@ -95,4 +94,4 @@ export const login = (body) => async dispatch => {
 };
 
 // Logout
-export const logout = () => ({ type: CLEAR_PROFILE, type: LOGOUT });
+export const logout = () => ({  type: LOGOUT });

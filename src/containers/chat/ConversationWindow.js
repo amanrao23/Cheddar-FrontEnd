@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ConversationWindowComp from '../../components/chat/ConversationWindowComp'
+import { connect } from 'react-redux';
 
-function ConversationWindow(props) {
+function ConversationWindow({chat}) {
     return (
-       <ConversationWindowComp></ConversationWindowComp>
+       <ConversationWindowComp conversation={chat.conversations}></ConversationWindowComp>
     )
 }
 
@@ -12,5 +13,9 @@ ConversationWindow.propTypes = {
 
 }
 
-export default ConversationWindow
+const mapStateToProps = state => ({
+    chat: state.chat,
+    auth: state.auth,
+  });
+  export default connect(mapStateToProps, {})(ConversationWindow);
 

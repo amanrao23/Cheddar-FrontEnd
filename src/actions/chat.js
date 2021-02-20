@@ -6,7 +6,9 @@ import {
     GET_CONVERSATIONS,
     GET_CONVERSATIONS_ERROR,
     NEW_CONVERSATION,
-    NEW_CONVERSATION_ERROR
+    NEW_CONVERSATION_ERROR,
+    SET_CONVERSATION,
+    SET_CONVERSATION_ERROR
 } from './types';
 
 // Load User
@@ -50,4 +52,19 @@ export const newConversation = (body) => async dispatch => {
      });
    }
  };
- 
+
+ export const setConversation = (conversation) => async dispatch => {
+  
+
+   try{
+    dispatch({
+      type: SET_CONVERSATION,
+      payload: conversation,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: SET_CONVERSATION_ERROR,
+    });
+  }
+};

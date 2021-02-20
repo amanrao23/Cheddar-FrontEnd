@@ -33,7 +33,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ConversationsComp = ({ conversations, auth }) => {
+const ConversationsComp = ({ conversations, auth, onClick }) => {
   const classes = useStyles();
 
   return (
@@ -71,25 +71,27 @@ const ConversationsComp = ({ conversations, auth }) => {
 
         <List>
           {console.log(conversations, 'j')}
-          {
-            conversations.map((conversation)=>{
-              conversation.recipients = conversation.recipients.filter((recipient)=>recipient._id!==auth.user._id)
-            })
-          }
+          {conversations.map(conversation => {
+            conversation.recipients = conversation.recipients.filter(
+              recipient => recipient._id !== auth.user._id
+            );
+          })}
           {conversations.length > 0 ? (
             conversations.map(conversation => (
-              <ListItem button key={conversation._id}>
-                <ListItemIcon>
-                  <Avatar
-                    alt='Remy Sharp'
-                    src='https://material-ui.com/static/images/avatar/1.jpg'
-                  />
-                </ListItemIcon>
-                <ListItemText primary={conversation.recipients[0].name}>
-                  {conversation.recipients[0].name}
-                </ListItemText>
-                <ListItemText secondary='online' align='right'></ListItemText>
-              </ListItem>
+              <span onClick={()=>{onClick(conversation)}}>
+                <ListItem>
+                  <ListItemIcon>
+                    <Avatar
+                      alt='Remy Sharp'
+                      src='https://material-ui.com/static/images/avatar/1.jpg'
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={conversation.recipients[0].name}>
+                    {conversation.recipients[0].name}
+                  </ListItemText>
+                  <ListItemText secondary='online' align='right'></ListItemText>
+                </ListItem>
+              </span>
             ))
           ) : (
             <h4>No conversations found...</h4>
