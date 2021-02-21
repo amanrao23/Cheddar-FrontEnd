@@ -99,8 +99,14 @@ const ConversationWindowComp = ({
               ></TextField>
             </Grid>
             <Grid xs={1} align='right'>
-              <Fab color='primary' aria-label='add'>
-                <SendIcon onClick={()=>{onSubmit()}} />
+              <Fab
+                color='primary'
+                aria-label='add'
+                onClick={() => {
+                  onSubmit();
+                }}
+              >
+                <SendIcon />
               </Fab>
             </Grid>
           </Grid>

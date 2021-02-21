@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ChatComp from '../../components/chat/ChatComp';
-import { getConversations } from '../../actions/chat';
+import { getConversations,addConversation } from '../../actions/chat';
 import { connect } from 'react-redux';
 // import io from "socket.io-client";
 import PropTypes from 'prop-types';
@@ -8,7 +8,7 @@ import socket from '../../socketConfig';
 // const ENDPOINT = "http://localhost:5000";
 
 // let socket;
-const Chat = ({ getConversations, auth, chat }) => {
+const Chat = ({ getConversations,addConversation, auth, chat }) => {
   const username = auth.user.username;
   const conversations = chat.conversations;
   useEffect(() => {
@@ -29,10 +29,14 @@ const Chat = ({ getConversations, auth, chat }) => {
   useEffect(() => {
     socket.on('newMessage', ({ text }) => {
       console.log(text, 'socket newMessage');
-      alert(text);
+      alert(text);// save in state 
     });
   }, []);
-
+  useEffect(() => {
+    socket.on('newConversation', ({ newConvo }) => {
+      addConversation(newConvo);
+    });
+  }, []);
   return <ChatComp />;
 };
 
@@ -41,4 +45,4 @@ const mapStateToProps = state => ({
   chat: state.chat,
 });
 
-export default connect(mapStateToProps, { getConversations })(Chat);
+export default connect(mapStateToProps, { getConversations,addConversation })(Chat);

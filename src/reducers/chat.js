@@ -3,7 +3,8 @@ import {
   GET_CONVERSATIONS,
   SET_CONVERSATION,
   GET_EVENTS,
-  NEW_EVENT
+  NEW_EVENT,
+  ADD_CONVERSATION
 } from '../actions/types';
 
 const initialState = {
@@ -64,6 +65,14 @@ function chatReducer(state = initialState, action) {
           ...state,
           events: [payload, ...state.events],
           loading: false,
+  
+        };
+      }
+      case ADD_CONVERSATION: {
+        console.log(payload);
+        return {
+          ...state,
+          conversations:[payload,...state.conversations]
   
         };
       }
