@@ -84,9 +84,9 @@ export const getEvents = chatId => async dispatch => {
 
   try {
 
-    const res = await axios.post('/api/event/', body, config);
+    const res = await axios.post('/api/event/getEvents', body, config);
     console.log(res.data)
-    dispatch({
+    dispatch({  
       type: GET_EVENTS,
       payload: res.data,
     });
@@ -104,9 +104,9 @@ export const newEvent = body => async dispatch => {
       'Content-Type': 'application/json',
     },
   };
-
+  console.log(body)
   try {
-    await axios.post('/api/event/', body, config);
+    await axios.post('/api/event/newEvent', body, config);
     //socket event
 
     const res = {};
