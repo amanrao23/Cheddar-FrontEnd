@@ -11,6 +11,8 @@ import {
   SET_CONVERSATION_ERROR,
   GET_EVENTS,
   GET_EVENTS_ERROR,
+  NEW_EVENT,
+  NEW_EVENT_ERROR,
 } from './types';
 
 // Load User
@@ -73,9 +75,10 @@ export const getEvents = chatId => async dispatch => {
       'Content-Type': 'application/json',
     },
   };
-
+  const timestamp = null;
+  const body = { chatRoomId: chatId, timestamp: timestamp };
   try {
-    const res = await axios.get('/api/event/', chatId, config);
+    const res = await axios.get('/api/event/', body, config);
 
     dispatch({
       type: GET_EVENTS,
@@ -85,6 +88,30 @@ export const getEvents = chatId => async dispatch => {
     console.log(err);
     dispatch({
       type: GET_EVENTS_ERROR,
+    });
+  }
+};
+
+export const newEvent = body => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    await axios.post('/api/event/', body, config);
+    //socket event
+    
+    const res={};
+    dispatch({
+      type: NEW_EVENT,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: NEW_EVENT_ERROR,
     });
   }
 };

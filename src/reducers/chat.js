@@ -3,13 +3,14 @@ import {
   GET_CONVERSATIONS,
   SET_CONVERSATION,
   GET_EVENTS,
+  NEW_EVENT
 } from '../actions/types';
 
 const initialState = {
   conversations: [],
   conversation: null,
-  events: null,
-  newEvents: null,
+  events: [],
+  newEvents: [],
   loading: true,
 };
 
@@ -40,13 +41,32 @@ function chatReducer(state = initialState, action) {
 
       };
     }
-    case GET_EVENTS:
+    case GET_EVENTS:{
+      
+      state.newEvents = state.newEvents.filter(
+        conversation => conversation._id !== payload._id
+      );
       return {
         ...state,
         events: payload,
         loading: false,
-
+        // whenever he refreshes this should get called
+     
       };
+    }
+      case NEW_EVENT: {
+        
+
+        // reducer newEvents -> events
+
+        console.log(payload);
+        return {
+          ...state,
+          events: [payload, ...state.events],
+          loading: false,
+  
+        };
+      }
     default:
       return state;
   }

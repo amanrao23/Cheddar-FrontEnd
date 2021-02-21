@@ -78,8 +78,8 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
           })}
           {conversations.length > 0 ? (
             conversations.map(conversation => (
-              <span onClick={()=>{onClick(conversation)}}>
-                <ListItem>
+            
+                <ListItem button onClick={()=>{onClick(conversation)}} >
                   <ListItemIcon>
                     <Avatar
                       alt='Remy Sharp'
@@ -91,7 +91,7 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
                   </ListItemText>
                   <ListItemText secondary='online' align='right'></ListItemText>
                 </ListItem>
-              </span>
+
             ))
           ) : (
             <h4>No conversations found...</h4>
