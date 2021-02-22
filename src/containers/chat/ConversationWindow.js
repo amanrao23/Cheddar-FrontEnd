@@ -9,16 +9,18 @@ function ConversationWindow({ chat, newEvent }) {
   const [formData, setFormData] = useState({
     text: '',
     type: 'new',
-    messageId: chat.events.length + 1,
   });
 
   const onChange = e => setFormData({ ...formData, text: e.target.value });
 
   const onSubmit = () => {
     formData.chatRoomId = chat.conversation._id;
+    formData.messageId= chat.events.length + 1;
+
+    console.log(chat.events.length,"length")
     newEvent(formData);
     const { text, chatRoomId } = formData;
-    socket.emit('newEvent', { text, chatRoomId });
+    // socket.emit('newEvent', formData);
     setFormData({ ...formData, text: '' });
   };
 

@@ -23,6 +23,7 @@ function chatReducer(state = initialState, action) {
       return {
         ...state,
         conversations: payload,
+        loading:false
       };
     case SET_CONVERSATION:
       return {

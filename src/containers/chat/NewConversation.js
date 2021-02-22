@@ -26,7 +26,7 @@ const NewConversation = ({ newConversation, auth, chat }) => {
       formData={formData}
       onChange={onChange}
       onSubmit={onSubmit}
-    ></NewConversationComp>
+    />
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ChatComp from '../../components/chat/ChatComp';
-import { getConversations,addConversation } from '../../actions/chat';
+import { getConversations,addConversation,addEvent } from '../../actions/chat';
 import { connect } from 'react-redux';
 // import io from "socket.io-client";
 import PropTypes from 'prop-types';
@@ -8,14 +8,13 @@ import socket from '../../socketConfig';
 // const ENDPOINT = "http://localhost:5000";
 
 // let socket;
-const Chat = ({ getConversations,addConversation, auth, chat }) => {
+const Chat = ({ getConversations,addConversation, auth, chat,addEvent }) => {
   const username = auth.user.username;
   const conversations = chat.conversations;
   useEffect(() => {
     getConversations();
   }, []);
   useEffect(() => {
-    // socket = io(ENDPOINT, { transports: ["websocket", "polling"] });
 
     if (auth.user.username !== undefined && conversations.length>0) {
       socket.emit('join', { username, conversations }, error => {
@@ -27,9 +26,11 @@ const Chat = ({ getConversations,addConversation, auth, chat }) => {
   }, [auth,chat.conversations]);
 
   useEffect(() => {
-    socket.on('newMessage', ({ text }) => {
-      console.log(text, 'socket newMessage');
-      alert(text);// save in state 
+    socket.on('newEvent', (event) => {
+      console.log(event, 'socket newMessage');
+      // if(chat.conversation && chat.conversation._id===event._id){
+      //   addEvent(event)
+      // }
     });
   }, []);
   useEffect(() => {
@@ -45,4 +46,4 @@ const mapStateToProps = state => ({
   chat: state.chat,
 });
 
-export default connect(mapStateToProps, { getConversations,addConversation })(Chat);
+export default connect(mapStateToProps, { getConversations,addConversation,addEvent })(Chat);

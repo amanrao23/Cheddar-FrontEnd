@@ -106,10 +106,9 @@ export const newEvent = body => async dispatch => {
   };
   console.log(body)
   try {
-    await axios.post('/api/event/newEvent', body, config);
+    const res= await axios.post('/api/event/newEvent', body, config);
     //socket event
 
-    const res = {};
     dispatch({
       type: NEW_EVENT,
       payload: res.data,
@@ -136,3 +135,18 @@ export const addConversation = body => async dispatch => {
     });
   }
 };
+export const addEvent = body => async dispatch => {
+  
+  try {
+    dispatch({
+      type: ADD_CONVERSATION,
+      payload: body,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: ADD_CONVERSATION_ERROR,
+    });
+  }
+};
+
