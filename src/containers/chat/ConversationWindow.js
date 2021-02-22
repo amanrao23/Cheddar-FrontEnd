@@ -20,12 +20,14 @@ function ConversationWindow({ chat, newEvent }) {
     console.log(chat.events.length,"length")
     newEvent(formData);
     const { text, chatRoomId } = formData;
-    // socket.emit('newEvent', formData);
+    
+    // socket.emit('newEvent', {formData});
     setFormData({ ...formData, text: '' });
   };
 
   return (
     <ConversationWindowComp
+    events={chat.events}
       conversation={chat.conversation}
       formData={formData}
       onChange={onChange}

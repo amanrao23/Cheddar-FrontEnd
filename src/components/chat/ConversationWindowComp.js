@@ -1,6 +1,9 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import moment from 'moment'
+import Typography from "@material-ui/core/Typography";
+
 import {
   Grid,
   List,
@@ -9,32 +12,33 @@ import {
   ListItemText,
   TextField,
   Fab,
-} from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+} from "@material-ui/core";
+import SendIcon from "@material-ui/icons/Send";
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
   chatSection: {
-    width: '100%',
-    height: '80vh',
+    width: "100%",
+    height: "80vh",
   },
   headBG: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: "#e0e0e0",
   },
   borderRight500: {
-    borderRight: '1px solid #e0e0e0',
+    borderRight: "1px solid #e0e0e0",
 
-    backgroundColor: '#0000e0',
+    backgroundColor: "#0000e0",
   },
   messageArea: {
-    height: '70vh',
-    overflowY: 'auto',
+    height: "70vh",
+    overflowY: "auto",
   },
 });
 
 const ConversationWindowComp = ({
+  events,
   conversation,
   onChange,
   onSubmit,
@@ -47,6 +51,18 @@ const ConversationWindowComp = ({
       <Fragment>
         <Grid item xs={8}>
           <List className={classes.messageArea}>
+            {events.map((event) => (
+              <Grid item xs={12}>
+                <ListItemText><Typography gutterBottom variant="h7" component="h3">
+                  {event.sender}</Typography>
+                  <Typography gutterBottom variant="h8" >{moment(event.date).format('LT')}</Typography>
+                
+                </ListItemText>
+                <Typography gutterBottom variant="h7">
+                  {event.text}
+                </Typography>
+              </Grid>
+            ))}
             {/* <ListItem key='1'>
               <Grid container>
                 <Grid item xs={12}>
@@ -88,20 +104,20 @@ const ConversationWindowComp = ({
             </ListItem> */}
           </List>
           <Divider />
-          <Grid container style={{ padding: '10px' }}>
+          <Grid container style={{ padding: "10px" }}>
             <Grid item xs={11}>
               <TextField
-                id='outlined-basic-email'
-                label='Type Something'
+                id="outlined-basic-email"
+                label="Type Something"
                 fullWidth
                 value={text}
                 onChange={onChange}
               ></TextField>
             </Grid>
-            <Grid xs={1} align='right'>
+            <Grid xs={1} align="right">
               <Fab
-                color='primary'
-                aria-label='add'
+                color="primary"
+                aria-label="add"
                 onClick={() => {
                   onSubmit();
                 }}

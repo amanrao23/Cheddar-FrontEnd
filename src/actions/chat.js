@@ -14,7 +14,9 @@ import {
   NEW_EVENT,
   NEW_EVENT_ERROR,
   ADD_CONVERSATION,
-  ADD_CONVERSATION_ERROR
+  ADD_CONVERSATION_ERROR,
+  ADD_EVENT_ERROR,
+  ADD_EVENT
 } from './types';
 
 // Load User
@@ -139,13 +141,13 @@ export const addEvent = body => async dispatch => {
   
   try {
     dispatch({
-      type: ADD_CONVERSATION,
+      type: ADD_EVENT,
       payload: body,
     });
   } catch (err) {
     console.log(err);
     dispatch({
-      type: ADD_CONVERSATION_ERROR,
+      type: ADD_EVENT_ERROR,
     });
   }
 };
