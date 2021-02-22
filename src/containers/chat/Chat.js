@@ -2,12 +2,9 @@ import React, { useEffect } from 'react';
 import ChatComp from '../../components/chat/ChatComp';
 import { getConversations,addConversation,addEvent } from '../../actions/chat';
 import { connect } from 'react-redux';
-// import io from "socket.io-client";
 import PropTypes from 'prop-types';
 import socket from '../../socketConfig';
-// const ENDPOINT = "http://localhost:5000";
 
-// let socket;
 const Chat = ({ getConversations,addConversation, auth, chat,addEvent }) => {
   const username = auth.user.username;
   const conversations = chat.conversations;

@@ -47,7 +47,7 @@ const ConversationWindowComp = ({
       <Fragment>
         <Grid item xs={8}>
           <List className={classes.messageArea}>
-            <ListItem key='1'>
+            {/* <ListItem key='1'>
               <Grid container>
                 <Grid item xs={12}>
                   <ListItemText
@@ -59,8 +59,8 @@ const ConversationWindowComp = ({
                   <ListItemText align='right' secondary='09:30'></ListItemText>
                 </Grid>
               </Grid>
-            </ListItem>
-            <ListItem key='2'>
+            </ListItem> */}
+            {/* <ListItem key='2'>
               <Grid container>
                 <Grid item xs={12}>
                   <ListItemText
@@ -72,8 +72,8 @@ const ConversationWindowComp = ({
                   <ListItemText align='left' secondary='09:31'></ListItemText>
                 </Grid>
               </Grid>
-            </ListItem>
-            <ListItem key='3'>
+            </ListItem> */}
+            {/* <ListItem key='3'>
               <Grid container>
                 <Grid item xs={12}>
                   <ListItemText
@@ -85,10 +85,10 @@ const ConversationWindowComp = ({
                   <ListItemText align='right' secondary='10:30'></ListItemText>
                 </Grid>
               </Grid>
-            </ListItem>
+            </ListItem> */}
           </List>
           <Divider />
-          <Grid container style={{ padding: '20px' }}>
+          <Grid container style={{ padding: '10px' }}>
             <Grid item xs={11}>
               <TextField
                 id='outlined-basic-email'

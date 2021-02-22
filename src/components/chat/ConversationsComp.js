@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import green from "@material-ui/core/colors/green";
+
 import {
   Grid,
   List,
@@ -8,10 +9,15 @@ import {
   Avatar,
   Divider,
   ListItemText,
-  TextField,
   ListItemIcon,
 } from '@material-ui/core';
+import NewConversation from '../../containers/chat/NewConversation';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 const useStyles = makeStyles({
+  textColor: {
+    color:"white",
+    fontSize:100
+  },
   table: {
     minWidth: 650,
   },
@@ -23,9 +29,9 @@ const useStyles = makeStyles({
     backgroundColor: '#e0e0e0',
   },
   borderRight500: {
-    borderRight: '1px solid #e0e0e0',
-
-    backgroundColor: 'lightGrey',
+    borderRight: '1px solid white',
+    backgroundColor: '#4A154B',
+    borderRadius:10,
   },
   messageArea: {
     height: '70vh',
@@ -48,24 +54,19 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
                 src='https://material-ui.com/static/images/avatar/1.jpg'
               />
             </ListItemIcon>
-            <ListItemText primary='John Wick'></ListItemText>
+            <ListItemText className={classes.textColor} primary={auth.user.username}></ListItemText>
           </ListItem>
         </List>
         <Divider />
         {/* search bar  */}
-        <Grid item xs={12} style={{ padding: '10px' }}>
-          <TextField
-            id='outlined-basic-email'
-            label='Search'
-            variant='outlined'
-            fullWidth
-          />
+        <Grid container spacing={2}>
+        <NewConversation/>
         </Grid>
         <Divider />
+
         {/* conversations */}
         {!conversations && (
           <center>
-            <span> No Active Conversation </span>
           </center>
         )}
 
@@ -80,16 +81,16 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
             conversations.map(conversation => (
             
                 <ListItem button onClick={()=>{onClick(conversation)}} >
-                  <ListItemIcon>
+                  {/* <ListItemIcon>
                     <Avatar
                       alt='Remy Sharp'
                       src='https://material-ui.com/static/images/avatar/1.jpg'
                     />
-                  </ListItemIcon>
-                  <ListItemText primary={conversation.recipients[0].name}>
+                  </ListItemIcon> */}
+                  <ListItemText className={classes.textColor}>
                     {conversation.recipients[0].name}
                   </ListItemText>
-                  <ListItemText secondary='online' align='right'></ListItemText>
+                  <ListItemText  align='right'><FiberManualRecordIcon style={{ fontSize: 20, color: green[500] }}/></ListItemText>
                 </ListItem>
 
             ))

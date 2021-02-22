@@ -1,5 +1,4 @@
 import React,{useState} from 'react';
-import PropTypes from 'prop-types';
 import NewConversationComp from '../../components/chat/NewConversationComp';
 import { connect } from 'react-redux';
 import { newConversation } from '../../actions/chat';
