@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import { newEvent } from '../../actions/chat';
 import socket from '../../socketConfig';
 
-function ConversationWindow({ chat, newEvent }) {
+function ConversationWindow({ chat, newEvent,auth }) {
   const [formData, setFormData] = useState({
     text: '',
-    type: 'new',
   });
 
   const onChange = e => setFormData({ ...formData, text: e.target.value });
@@ -16,6 +15,7 @@ function ConversationWindow({ chat, newEvent }) {
   const onSubmit = () => {
     formData.chatRoomId = chat.conversation._id;
     formData.messageId= chat.events.length + 1;
+    formData.type= 'new';
 
     console.log(chat.events.length,"length")
     newEvent(formData);
@@ -24,7 +24,24 @@ function ConversationWindow({ chat, newEvent }) {
     // socket.emit('newEvent', {formData});
     setFormData({ ...formData, text: '' });
   };
-
+  const editEvent=(text,eventPre)=>{
+    const event={};
+    console.log(text,eventPre);
+    event.chatRoomId = eventPre.chatRoomId;
+    event.messageId= eventPre.messageId
+    event.type= 'edit';
+    event.text=text;
+    newEvent(event);
+  }
+  const deleteEvent=(eventPre)=>{
+    const event={};
+    event.chatRoomId = eventPre.chatRoomId;
+    event.messageId= eventPre.messageId
+    event.type= 'delete';
+    event.text="This message was deleted";
+    console.log(event,"In sumbit delte event")
+    newEvent(event);
+  }
   return (
     <ConversationWindowComp
     events={chat.events}
@@ -32,6 +49,9 @@ function ConversationWindow({ chat, newEvent }) {
       formData={formData}
       onChange={onChange}
       onSubmit={onSubmit}
+      auth={auth}
+      deleteEvent={deleteEvent}
+      editEvent={editEvent}
     />
   );
 }

@@ -29,7 +29,7 @@ const Chat = ({ getConversations, addConversation, auth, chat, addEvent }) => {
     socket.on("newEvent", ({ event }) => {
       console.log(event, "socket newMessage");
       console.log(event._id, "eventid");
-     console.log(chat)
+     console.log(chat,'hey man comonnnnn')
       if (chat.conversation && chat.conversation._id === event.chatRoomId) {
         addEvent(event);
       } else {

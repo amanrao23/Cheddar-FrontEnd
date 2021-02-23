@@ -70,25 +70,21 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
           </center>
         )}
 
+
         <List>
           {console.log(conversations, 'j')}
-          {conversations.map(conversation => {
+          {/* {conversations.map(conversation => {
             conversation.recipients = conversation.recipients.filter(
               recipient => recipient._id !== auth.user._id
             );
-          })}
+          })} */}
           {conversations.length > 0 ? (
             conversations.map(conversation => (
-            
+              conversation.recipients!==undefined&&
                 <ListItem button onClick={()=>{onClick(conversation)}} >
-                  {/* <ListItemIcon>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src='https://material-ui.com/static/images/avatar/1.jpg'
-                    />
-                  </ListItemIcon> */}
-                  <ListItemText className={classes.textColor}>
-                    {conversation.recipients[0].name}
+                  
+                  <ListItemText >
+                    {conversation.recipients[0].username===auth.user.username ?  conversation.recipients[1].username:conversation.recipients[0].name}
                   </ListItemText>
                   <ListItemText  align='right'><FiberManualRecordIcon style={{ fontSize: 20, color: green[500] }}/></ListItemText>
                 </ListItem>
