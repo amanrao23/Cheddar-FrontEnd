@@ -6,8 +6,9 @@ import {
   NEW_EVENT,
   ADD_CONVERSATION,
   ADD_EVENT,
-  CLEAR_CHAT
-} from '../actions/types';
+  CLEAR_CHAT,
+  ADD_NOTIFICATION,
+} from "../actions/types";
 
 const initialState = {
   conversations: [],
@@ -15,6 +16,7 @@ const initialState = {
   events: [],
   newEvents: [],
   loading: true,
+  notifications: [],
 };
 
 function chatReducer(state = initialState, action) {
@@ -27,15 +29,19 @@ function chatReducer(state = initialState, action) {
         conversations: payload,
         loading: false,
       };
-    case SET_CONVERSATION:
+    case SET_CONVERSATION: {
+      state.notifications = state.notifications.filter(
+        (notification) => notification !== payload._id
+      );
       return {
         ...state,
         conversation: payload,
         loading: false,
       };
+    }
     case NEW_CONVERSATION: {
       state.conversations = state.conversations.filter(
-        conversation => conversation._id !== payload._id
+        (conversation) => conversation._id !== payload._id
       );
       console.log(payload);
       return {
@@ -57,16 +63,16 @@ function chatReducer(state = initialState, action) {
     }
     case NEW_EVENT: {
       // reducer newEvents -> events
-      console.log(payload,"In redcer of delete event")
+      console.log(payload, "In redcer of delete event");
 
-      if (payload.type !== 'new') {
-        console.log('Edit/Delete');
-        console.log(state.events,'1stt');
-        state.events[payload.messageId-1] = payload;
-        console.log(state.events,'2ndd');
-        return{
+      if (payload.type !== "new") {
+        console.log("Edit/Delete");
+        console.log(state.events, "1stt");
+        state.events[payload.messageId - 1] = payload;
+        console.log(state.events, "2ndd");
+        return {
           ...state,
-        }
+        };
       } else {
         return {
           ...state,
@@ -84,18 +90,35 @@ function chatReducer(state = initialState, action) {
     case ADD_EVENT: {
       // filter if not type == new
       console.log(payload);
-      if (payload.type !== 'new') {
-        console.log('Edit/Delete');
-        state.events[payload.messageId-1] = payload;
-        return{
+      if (payload.type !== "new") {
+        console.log("Edit/Delete");
+        state.events[payload.messageId - 1] = payload;
+        return {
           ...state,
-        }
+        };
       } else {
         return {
           ...state,
           events: [...state.events, payload],
         };
       }
+    }
+    case ADD_NOTIFICATION: {
+
+      const notifiedConvo=state.conversations.filter(
+        (convo) => convo._id === payload
+      );
+        state.conversations=state.conversations.filter(
+          (convo) => convo._id !== payload
+        )
+      state.notifications = state.notifications.filter(
+        (notification) => notification !== payload
+      );
+      return {
+        ...state,
+        notifications: [payload, ...state.notifications],
+        conversations:[notifiedConvo[0], ...state.conversations]
+      };
     }
     case CLEAR_CHAT: {
       return {

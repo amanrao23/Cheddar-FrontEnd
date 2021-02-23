@@ -4,12 +4,13 @@ import {
   getConversations,
   addConversation,
   addEvent,
+  addNotification,
 } from "../../actions/chat";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import socket from "../../socketConfig";
 
-const Chat = ({ getConversations, addConversation, auth, chat, addEvent }) => {
+const Chat = ({ getConversations, addConversation, auth, chat, addEvent,addNotification }) => {
   const username = auth.user.username;
   const conversations = chat.conversations;
   useEffect(() => {
@@ -29,10 +30,12 @@ const Chat = ({ getConversations, addConversation, auth, chat, addEvent }) => {
     socket.on("newEvent", ({ event }) => {
       console.log(event, "socket newMessage");
       console.log(event._id, "eventid");
-     console.log(chat,'hey man comonnnnn')
+      console.log(chat, "hey man comonnnnn");
       if (chat.conversation && chat.conversation._id === event.chatRoomId) {
         addEvent(event);
+        
       } else {
+        addNotification(event.chatRoomId)
         //send notification of new event
       }
     });
@@ -55,4 +58,5 @@ export default connect(mapStateToProps, {
   getConversations,
   addConversation,
   addEvent,
+  addNotification
 })(Chat);
