@@ -18,7 +18,12 @@ import {
   ADD_EVENT_ERROR,
   ADD_EVENT,
   ADD_NOTIFICATION,
-  ADD_NOTIFICATION_ERROR
+  ADD_NOTIFICATION_ERROR,
+  ADD_ONLINE,
+  ADD_OFFLINE,
+  ADD_STATUS_ERROR
+
+
 } from "./types";
 
 // Load User
@@ -75,14 +80,14 @@ export const setConversation = (conversation) => async (dispatch) => {
   }
 };
 
-export const getEvents = (chatId) => async (dispatch) => {
+export const getEvents = (chatId,username) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
   const timestamp = null;
-  const body = { chatRoomId: chatId, timestamp: timestamp };
+  const body = { chatRoomId: chatId, timestamp: timestamp, username:username};
   console.log(body);
 
   try {
@@ -165,3 +170,32 @@ export const addNotification = (body) => async (dispatch) => {
     });
   }
 };
+
+export const addOnline = (body) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ADD_ONLINE,
+      payload: body,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: ADD_STATUS_ERROR,
+    });
+  }
+};
+
+export const addOffline = (body) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ADD_OFFLINE,
+      payload: body,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: ADD_STATUS_ERROR,
+    });
+  }
+};
+

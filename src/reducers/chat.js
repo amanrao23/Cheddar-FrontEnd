@@ -8,6 +8,8 @@ import {
   ADD_EVENT,
   CLEAR_CHAT,
   ADD_NOTIFICATION,
+  ADD_ONLINE,
+  ADD_OFFLINE,
 } from "../actions/types";
 
 const initialState = {
@@ -17,6 +19,7 @@ const initialState = {
   newEvents: [],
   loading: true,
   notifications: [],
+  onlineUser: "offline",
 };
 
 function chatReducer(state = initialState, action) {
@@ -37,6 +40,7 @@ function chatReducer(state = initialState, action) {
         ...state,
         conversation: payload,
         loading: false,
+        onlineUser: "offline",
       };
     }
     case NEW_CONVERSATION: {
@@ -104,20 +108,25 @@ function chatReducer(state = initialState, action) {
       }
     }
     case ADD_NOTIFICATION: {
-
-      const notifiedConvo=state.conversations.filter(
+      const notifiedConvo = state.conversations.filter(
         (convo) => convo._id === payload
       );
-        state.conversations=state.conversations.filter(
-          (convo) => convo._id !== payload
-        )
+      state.conversations = state.conversations.filter(
+        (convo) => convo._id !== payload
+      );
       state.notifications = state.notifications.filter(
         (notification) => notification !== payload
       );
       return {
         ...state,
         notifications: [payload, ...state.notifications],
-        conversations:[notifiedConvo[0], ...state.conversations]
+        conversations: [notifiedConvo[0], ...state.conversations],
+      };
+    }
+    case ADD_ONLINE: {
+      return {
+        ...state,
+        onlineUser: payload,
       };
     }
     case CLEAR_CHAT: {

@@ -5,12 +5,21 @@ import {
   addConversation,
   addEvent,
   addNotification,
+  addOnline,
 } from "../../actions/chat";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import socket from "../../socketConfig";
 
-const Chat = ({ getConversations, addConversation, auth, chat, addEvent,addNotification }) => {
+const Chat = ({
+  getConversations,
+  addConversation,
+  auth,
+  chat,
+  addEvent,
+  addNotification,
+  addOnline,
+}) => {
   const username = auth.user.username;
   const conversations = chat.conversations;
   useEffect(() => {
@@ -28,22 +37,25 @@ const Chat = ({ getConversations, addConversation, auth, chat, addEvent,addNotif
 
   useEffect(() => {
     socket.on("newEvent", ({ event }) => {
-      console.log(event, "socket newMessage");
-      console.log(event._id, "eventid");
-      console.log(chat, "hey man comonnnnn");
-      if (chat.conversation && chat.conversation._id === event.chatRoomId) {
-        addEvent(event);
-        
-      } else {
-        addNotification(event.chatRoomId)
-        //send notification of new event
-      }
+      // console.log(event, "socket newMessage");
+      // console.log(event._id, "eventid");
+      // console.log(chat, "hey man comonnnnn");
+      (chat.conversation && chat.conversation._id === event.chatRoomId)
+        ? addEvent(event)
+        : addNotification(event.chatRoomId);
+      //send notification of new event
     });
   }, [chat.conversation]);
   useEffect(() => {
     socket.on("newConversation", ({ newConvo }) => {
       console.log(newConvo, "new conversation");
       addConversation(newConvo);
+    });
+  }, []);
+  useEffect(() => {
+    socket.on("online", ({ userStatus }) => {
+      console.log(userStatus, "new online id");
+      addOnline(userStatus);
     });
   }, []);
   return <ChatComp />;
@@ -58,5 +70,6 @@ export default connect(mapStateToProps, {
   getConversations,
   addConversation,
   addEvent,
-  addNotification
+  addNotification,
+  addOnline,
 })(Chat);
