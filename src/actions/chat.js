@@ -106,7 +106,7 @@ export const newEvent = body => async dispatch => {
       'Content-Type': 'application/json',
     },
   };
-  console.log(body)
+  console.log(body,"In newEvent jiiiiiiiiiiii")
   try {
     const res= await axios.post('/api/event/newEvent', body, config);
     //socket event
@@ -124,7 +124,7 @@ export const newEvent = body => async dispatch => {
 };
 
 export const addConversation = body => async dispatch => {
-  
+  console.log('In add Conversation ')
   try {
     dispatch({
       type: ADD_CONVERSATION,
