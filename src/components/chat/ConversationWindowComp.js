@@ -66,17 +66,21 @@ const ConversationWindowComp = ({
     open: false,
     singleEvent: null,
     editText: '',
-   
   });
 
-  const handleClickOpenEdit = (singleEvent) => {
-    setOpenEdit({ ...openEdit, open: true,singleEvent:singleEvent });
+  const handleClickOpenEdit = singleEventProp => {
+
+    console.log(singleEventProp.text)
+    setOpenEdit({ ...openEdit, open: true, singleEvent: singleEventProp ,editText: singleEventProp.text});
+    
+
   };
   const onChangeEditText = e => {
+    console.log(openEdit.editText)
     setOpenEdit({ ...openEdit, editText: e.target.value });
   };
   
-  
+
   const handleCloseEdit = () => {
     setOpenEdit({ ...openEdit, open: false });
   };
@@ -85,10 +89,10 @@ const ConversationWindowComp = ({
     singleEvent: null,
   });
 
-  const handleClickOpenDelete = (singleEvent) => {
-    setOpenDelete({ ...openDelete, open: true,singleEvent:singleEvent });
+  const handleClickOpenDelete = singleEvent => {
+    setOpenDelete({ ...openDelete, open: true, singleEvent: singleEvent });
   };
-  
+
   const handleCloseDelete = () => {
     setOpenDelete({ ...openDelete, open: false });
   };
@@ -113,19 +117,18 @@ const ConversationWindowComp = ({
                   </Typography>
                 </Grid>
                 <Grid item xs={1}>
-                  {console.log(event.sender, auth.user._id, event.text)}
                   {event.sender === auth.user._id && (
                     <Fragment>
                       <Button
                         className={classes.editButton}
-                        onClick={()=>handleClickOpenEdit(event)}
+                        onClick={() => handleClickOpenEdit(event)}
                       >
                         EDIT
                       </Button>
 
                       <Button
                         className={classes.deleteButton}
-                        onClick={()=>handleClickOpenDelete(event)}
+                        onClick={() => handleClickOpenDelete(event)}
                       >
                         {' '}
                         DELETE
@@ -146,7 +149,14 @@ const ConversationWindowComp = ({
               >
                 <h4>Delete this Message</h4>
                 {/* {console.log()} */}
-                <Button onClick={()=>{deleteEvent(openDelete.singleEvent)}} > Sure?</Button>
+                <Button
+                  onClick={() => {
+                    deleteEvent(openDelete.singleEvent);
+                  }}
+                >
+                  {' '}
+                  Sure?
+                </Button>
               </DialogTitle>
             </Dialog>
             <Dialog
@@ -159,6 +169,29 @@ const ConversationWindowComp = ({
                 onClose={handleCloseEdit}
               >
                 Edit this Message
+                <Grid container style={{ padding: '10px' }}>
+                  <Grid item xs={11}>
+                    <TextField
+                      id='outlined-basic-email'
+                   
+                      fullWidth
+                      value={openEdit.editText}
+                      onChange={onChangeEditText}
+                    ></TextField>
+                  </Grid>
+                  <Grid xs={1} align='right'>
+                    <Fab
+                      color='primary'
+                      aria-label='add'
+                      onClick={() => {
+                        
+                        editEvent(openEdit.editText,openEdit.singleEvent);
+                      }}
+                    >
+                      <SendIcon />
+                    </Fab>
+                  </Grid>
+                </Grid>
               </DialogTitle>
             </Dialog>
             {/* <ListItem key='1'>

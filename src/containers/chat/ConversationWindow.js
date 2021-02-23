@@ -26,6 +26,7 @@ function ConversationWindow({ chat, newEvent,auth }) {
   };
   const editEvent=(text,eventPre)=>{
     const event={};
+    console.log(text,eventPre);
     event.chatRoomId = eventPre.chatRoomId;
     event.messageId= eventPre.messageId
     event.type= 'edit';
