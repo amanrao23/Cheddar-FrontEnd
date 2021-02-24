@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import green from "@material-ui/core/colors/green";
+import green from '@material-ui/core/colors/green';
 
+import Typography from '@material-ui/core/Typography';
 import {
   Grid,
   List,
@@ -15,8 +16,9 @@ import NewConversation from '../../containers/chat/NewConversation';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 const useStyles = makeStyles({
   textColor: {
-    color:"white",
-    fontSize:100
+    color: 'white',
+    fontSize: 25,
+    margin: 10,
   },
   table: {
     minWidth: 650,
@@ -31,7 +33,7 @@ const useStyles = makeStyles({
   borderRight500: {
     borderRight: '1px solid white',
     backgroundColor: '#4A154B',
-    borderRadius:10,
+    borderRadius: 10,
   },
   messageArea: {
     height: '70vh',
@@ -46,30 +48,27 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
     <Fragment>
       <Grid item xs={2} className={classes.borderRight500}>
         {/* user */}
-        <List>
-          <ListItem button key='RemySharp'>
-            <ListItemIcon>
+
+        {/* <ListItemIcon>
               <Avatar
                 alt='Remy Sharp'
                 src='https://material-ui.com/static/images/avatar/1.jpg'
               />
-            </ListItemIcon>
-            <ListItemText className={classes.textColor} primary={auth.user.username}></ListItemText>
-          </ListItem>
-        </List>
+            </ListItemIcon> */}
+        <Typography className={classes.textColor}>
+          {' '}
+          {auth.user.username}
+        </Typography>
+
         <Divider />
         {/* search bar  */}
         <Grid container spacing={2}>
-        <NewConversation/>
+          <NewConversation />
         </Grid>
         <Divider />
 
         {/* conversations */}
-        {!conversations && (
-          <center>
-          </center>
-        )}
-
+        {!conversations && <center></center>}
 
         <List>
           {console.log(conversations, 'j')}
@@ -79,17 +78,30 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
             );
           })} */}
           {conversations.length > 0 ? (
-            conversations.map(conversation => (
-              conversation.recipients!==undefined&&
-                <ListItem button onClick={()=>{onClick(conversation)}} >
-                  
-                  <ListItemText >
-                    {conversation.recipients[0].username===auth.user.username ?  conversation.recipients[1].username:conversation.recipients[0].name}
-                  </ListItemText>
-                  <ListItemText  align='right'><FiberManualRecordIcon style={{ fontSize: 20, color: green[500] }}/></ListItemText>
-                </ListItem>
-
-            ))
+            conversations.map(
+              conversation =>
+                conversation.recipients !== undefined && (
+                  <ListItem
+                    button
+                    className={classes.textColor}
+                    onClick={() => {
+                      onClick(conversation);
+                    }}
+                  >
+                    <ListItemText>
+                      {conversation.recipients[0].username ===
+                      auth.user.username
+                        ? conversation.recipients[1].username
+                        : conversation.recipients[0].name}
+                    </ListItemText>
+                    <ListItemText align='right'>
+                      <FiberManualRecordIcon
+                        style={{ fontSize: 20, color: green[500] }}
+                      />
+                    </ListItemText>
+                  </ListItem>
+                )
+            )
           ) : (
             <h4>No conversations found...</h4>
           )}

@@ -36,6 +36,7 @@ const Chat = ({
   }, [auth, chat.conversations]);
 
   useEffect(() => {
+    console.log("Hi",chat.conversation)
     socket.on("newEvent", ({ event }) => {
       // console.log(event, "socket newMessage");
       // console.log(event._id, "eventid");

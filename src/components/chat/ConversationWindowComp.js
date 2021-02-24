@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
@@ -35,19 +35,39 @@ const useStyles = makeStyles({
     backgroundColor: '#0000e0',
   },
   messageArea: {
-    height: '70vh',
+    height: '74vh',
     overflowY: 'auto',
-    border: '1px solid #e0e0e0',
+    border: '1px solid #f7f5f5',
   },
-  message: {
-    marginRight: '40%',
-    marginLeft: '5%',
+  hover: {
+    padding: 10,
+    marginRight: '10%',
     marginTop: '1%',
-    border: '1px solid #e0e0e0',
     background: 'light',
+
+    '&:hover': {
+      backgroundColor: '#f7f5f5',
+      editButton: {
+        color: 'green',
+        display: 'block',
+      },
+      deleteButton: {
+        color: 'red',
+        display: 'block',
+      },
+    },
   },
-  editButton: { color: 'green' },
-  deleteButton: { color: 'red' },
+  editButton: {
+    display: 'none',
+  },
+  deleteButton: {
+    display: 'none',
+  },
+
+  time: {
+    position: 'relative',
+    top: 4,
+  },
 });
 
 const ConversationWindowComp = ({
@@ -69,17 +89,18 @@ const ConversationWindowComp = ({
   });
 
   const handleClickOpenEdit = singleEventProp => {
-
-    console.log(singleEventProp.text)
-    setOpenEdit({ ...openEdit, open: true, singleEvent: singleEventProp ,editText: singleEventProp.text});
-    
-
+    console.log(singleEventProp.text);
+    setOpenEdit({
+      ...openEdit,
+      open: true,
+      singleEvent: singleEventProp,
+      editText: singleEventProp.text,
+    });
   };
   const onChangeEditText = e => {
-    console.log(openEdit.editText)
+    console.log(openEdit.editText);
     setOpenEdit({ ...openEdit, editText: e.target.value });
   };
-  
 
   const handleCloseEdit = () => {
     setOpenEdit({ ...openEdit, open: false });
@@ -102,16 +123,26 @@ const ConversationWindowComp = ({
         <Grid item xs={10}>
           <List className={classes.messageArea}>
             {events.map(event => (
-              <Grid container className={classes.message}>
+              <Grid container className={classes.hover}>
                 <Grid item xs={9}>
-                  <ListItemText>
-                    <Typography gutterBottom variant='h7' component='h3'>
-                      {event.sender}
-                    </Typography>
-                    <Typography gutterBottom variant='h8'>
-                      {moment(event.date).format('LT')}
-                    </Typography>
-                  </ListItemText>
+                  <Grid container>
+                    <Grid item xs={1}>
+                      <ListItemText>
+                        <Typography gutterBottom variant='h7' component='h4'>
+                          {conversation.recipients[0]._id === event.sender
+                            ? conversation.recipients[0].username
+                            : conversation.recipients[1].username}
+                        </Typography>
+                      </ListItemText>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <ListItemText
+                        align='left'
+                        className={classes.time}
+                        secondary={moment(event.date).format('LT')}
+                      ></ListItemText>
+                    </Grid>
+                  </Grid>
                   <Typography gutterBottom variant='h7'>
                     {event.text}
                   </Typography>
@@ -173,7 +204,6 @@ const ConversationWindowComp = ({
                   <Grid item xs={11}>
                     <TextField
                       id='outlined-basic-email'
-                   
                       fullWidth
                       value={openEdit.editText}
                       onChange={onChangeEditText}
@@ -184,8 +214,7 @@ const ConversationWindowComp = ({
                       color='primary'
                       aria-label='add'
                       onClick={() => {
-                        
-                        editEvent(openEdit.editText,openEdit.singleEvent);
+                        editEvent(openEdit.editText, openEdit.singleEvent);
                       }}
                     >
                       <SendIcon />
@@ -235,7 +264,7 @@ const ConversationWindowComp = ({
             </ListItem> */}
           </List>
           <Divider />
-          <Grid container style={{ padding: '10px' }}>
+          <Grid container style={{ paddingTop: '1%' }}>
             <Grid item xs={11}>
               <TextField
                 id='outlined-basic-email'

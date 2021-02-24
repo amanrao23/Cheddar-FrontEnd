@@ -94,6 +94,7 @@ function chatReducer(state = initialState, action) {
     case ADD_EVENT: {
       // filter if not type == new
       console.log(payload);
+      if(payload.chatRoomId===state.conversation._id){
       if (payload.type !== "new") {
         console.log("Edit/Delete");
         state.events[payload.messageId - 1] = payload;
@@ -106,6 +107,12 @@ function chatReducer(state = initialState, action) {
           events: [...state.events, payload],
         };
       }
+    }
+    else{
+      return{
+        ...state,
+      }
+    }
     }
     case ADD_NOTIFICATION: {
       const notifiedConvo = state.conversations.filter(
