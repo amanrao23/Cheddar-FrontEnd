@@ -36,12 +36,12 @@ const Chat = ({
   }, [auth, chat.conversations]);
 
   useEffect(() => {
-    console.log("Hi",chat.conversation)
+    console.log("Hi", chat.conversation);
     socket.on("newEvent", ({ event }) => {
       // console.log(event, "socket newMessage");
       // console.log(event._id, "eventid");
       // console.log(chat, "hey man comonnnnn");
-      (chat.conversation && chat.conversation._id === event.chatRoomId)
+      chat.conversation && chat.conversation._id === event.chatRoomId
         ? addEvent(event)
         : addNotification(event.chatRoomId);
       //send notification of new event

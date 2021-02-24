@@ -1,9 +1,11 @@
-import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import moment from 'moment';
-import Typography from '@material-ui/core/Typography';
-
+import React, { Fragment, useState } from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import moment from "moment";
+import Typography from "@material-ui/core/Typography";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Cheese from "../layout/Cheese";
 import {
   Grid,
   List,
@@ -15,58 +17,35 @@ import {
   Button,
   Dialog,
   DialogTitle,
-} from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+} from "@material-ui/core";
+import SendIcon from "@material-ui/icons/Send";
 
 const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-  chatSection: {
-    width: '100%',
-    height: '80vh',
-  },
-  headBG: {
-    backgroundColor: '#e0e0e0',
-  },
-  borderRight500: {
-    borderRight: '1px solid #e0e0e0',
-
-    backgroundColor: '#0000e0',
-  },
   messageArea: {
-    height: '74vh',
-    overflowY: 'auto',
-    border: '1px solid #f7f5f5',
+    height: "68vh",
+    overflowY: "auto",
+    border: "1px solid #f7f5f5",
   },
-  hover: {
+  hoverMessage: {
     padding: 10,
-    marginRight: '10%',
-    marginTop: '1%',
-    background: 'light',
+    marginRight: "10%",
+    marginTop: "1%",
+    background: "light",
 
-    '&:hover': {
-      backgroundColor: '#f7f5f5',
-      editButton: {
-        color: 'green',
-        display: 'block',
-      },
-      deleteButton: {
-        color: 'red',
-        display: 'block',
-      },
+    "&:hover": {
+      backgroundColor: "#f7f5f5",
     },
   },
   editButton: {
-    display: 'none',
+    color: "green",
   },
   deleteButton: {
-    display: 'none',
+    color: "red",
   },
 
   time: {
-    position: 'relative',
-    top: 4,
+    position: "relative",
+    top: 6,
   },
 });
 
@@ -85,10 +64,10 @@ const ConversationWindowComp = ({
   const [openEdit, setOpenEdit] = React.useState({
     open: false,
     singleEvent: null,
-    editText: '',
+    editText: "",
   });
 
-  const handleClickOpenEdit = singleEventProp => {
+  const handleClickOpenEdit = (singleEventProp) => {
     console.log(singleEventProp.text);
     setOpenEdit({
       ...openEdit,
@@ -97,7 +76,7 @@ const ConversationWindowComp = ({
       editText: singleEventProp.text,
     });
   };
-  const onChangeEditText = e => {
+  const onChangeEditText = (e) => {
     console.log(openEdit.editText);
     setOpenEdit({ ...openEdit, editText: e.target.value });
   };
@@ -110,7 +89,7 @@ const ConversationWindowComp = ({
     singleEvent: null,
   });
 
-  const handleClickOpenDelete = singleEvent => {
+  const handleClickOpenDelete = (singleEvent) => {
     setOpenDelete({ ...openDelete, open: true, singleEvent: singleEvent });
   };
 
@@ -120,15 +99,15 @@ const ConversationWindowComp = ({
   if (conversation) {
     return (
       <Fragment>
-        <Grid item xs={10}>
+        <Grid item xs={12}>
           <List className={classes.messageArea}>
-            {events.map(event => (
-              <Grid container className={classes.hover}>
+            {events.map((event) => (
+              <Grid container className={classes.hoverMessage}>
                 <Grid item xs={9}>
                   <Grid container>
                     <Grid item xs={1}>
                       <ListItemText>
-                        <Typography gutterBottom variant='h7' component='h4'>
+                        <Typography gutterBottom variant="h7" component="h3">
                           {conversation.recipients[0]._id === event.sender
                             ? conversation.recipients[0].username
                             : conversation.recipients[1].username}
@@ -137,33 +116,46 @@ const ConversationWindowComp = ({
                     </Grid>
                     <Grid item xs={2}>
                       <ListItemText
-                        align='left'
+                        align="left"
                         className={classes.time}
-                        secondary={moment(event.date).format('LT')}
+                        secondary={moment(event.date).format("LT")}
                       ></ListItemText>
                     </Grid>
                   </Grid>
-                  <Typography gutterBottom variant='h7'>
+                  <Typography gutterBottom variant="h7">
                     {event.text}
                   </Typography>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                   {event.sender === auth.user._id && (
                     <Fragment>
-                      <Button
-                        className={classes.editButton}
-                        onClick={() => handleClickOpenEdit(event)}
-                      >
-                        EDIT
-                      </Button>
-
-                      <Button
-                        className={classes.deleteButton}
-                        onClick={() => handleClickOpenDelete(event)}
-                      >
-                        {' '}
-                        DELETE
-                      </Button>
+                      <Grid container>
+                        <Grid item xs={1}>
+                          <ListItemText>
+                            <Button
+                              className={classes.editButton}
+                              onClick={() => handleClickOpenEdit(event)}
+                            >
+                              <EditIcon />
+                            </Button>
+                          </ListItemText>
+                        </Grid>
+                        <Grid item xs={1}>
+                          <ListItemText>
+                            {" "}
+                          </ListItemText>
+                        </Grid>
+                        <Grid item xs={1}>
+                          <ListItemText>
+                            <Button
+                              className={classes.deleteButton}
+                              onClick={() => handleClickOpenDelete(event)}
+                            >
+                              <DeleteIcon />
+                            </Button>
+                          </ListItemText>
+                        </Grid>
+                      </Grid>
                     </Fragment>
                   )}
                 </Grid>
@@ -171,48 +163,48 @@ const ConversationWindowComp = ({
             ))}
             <Dialog
               onClose={handleCloseDelete}
-              aria-labelledby='customized-dialog-title'
+              aria-labelledby="customized-dialog-title"
               open={openDelete.open}
             >
               <DialogTitle
-                id='customized-dialog-title'
+                id="customized-dialog-title"
                 onClose={handleCloseDelete}
               >
-                <h4>Delete this Message</h4>
+                <h4>Delete this Message?</h4>
                 {/* {console.log()} */}
                 <Button
                   onClick={() => {
                     deleteEvent(openDelete.singleEvent);
                   }}
                 >
-                  {' '}
-                  Sure?
+                  {" "}
+                  Confirm
                 </Button>
               </DialogTitle>
             </Dialog>
             <Dialog
               onClose={handleCloseEdit}
-              aria-labelledby='customized-dialog-title'
+              aria-labelledby="customized-dialog-title"
               open={openEdit.open}
             >
               <DialogTitle
-                id='customized-dialog-title'
+                id="customized-dialog-title"
                 onClose={handleCloseEdit}
               >
                 Edit this Message
-                <Grid container style={{ padding: '10px' }}>
-                  <Grid item xs={11}>
+                <Grid container style={{ padding: "12px" }}>
+                  <Grid item xs={10}>
                     <TextField
-                      id='outlined-basic-email'
+                      id="outlined-basic-email"
                       fullWidth
                       value={openEdit.editText}
                       onChange={onChangeEditText}
                     ></TextField>
                   </Grid>
-                  <Grid xs={1} align='right'>
+                  <Grid xs={1} align="right">
                     <Fab
-                      color='primary'
-                      aria-label='add'
+                      color="primary"
+                      aria-label="add"
                       onClick={() => {
                         editEvent(openEdit.editText, openEdit.singleEvent);
                       }}
@@ -264,20 +256,20 @@ const ConversationWindowComp = ({
             </ListItem> */}
           </List>
           <Divider />
-          <Grid container style={{ paddingTop: '1%' }}>
+          <Grid container style={{ paddingTop: "1%" }}>
             <Grid item xs={11}>
               <TextField
-                id='outlined-basic-email'
-                label='Type Something'
+                id="outlined-basic-email"
+                label="Type Something"
                 fullWidth
                 value={text}
                 onChange={onChange}
               ></TextField>
             </Grid>
-            <Grid xs={1} align='right'>
+            <Grid xs={1} align="right">
               <Fab
-                color='primary'
-                aria-label='add'
+                color="primary"
+                aria-label="add"
                 onClick={() => {
                   onSubmit();
                 }}
@@ -290,7 +282,7 @@ const ConversationWindowComp = ({
       </Fragment>
     );
   } else {
-    return <Fragment> No Conversation Selected </Fragment>;
+    return <Cheese />;
   }
 };
 

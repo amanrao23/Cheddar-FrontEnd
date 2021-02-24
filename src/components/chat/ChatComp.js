@@ -1,54 +1,42 @@
-import React from 'react'
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Conversations from '../../containers/chat/Conversations';
-
-import ConversationWindow from '../../containers/chat/ConversationWindow';
-import { makeStyles } from '@material-ui/core/styles';
-
+import React from "react";
+import Paper from "@material-ui/core/Paper";
+import Conversations from "../../containers/chat/Conversations";
+import ConversationWindow from "../../containers/chat/ConversationWindow";
+import { makeStyles } from "@material-ui/core/styles";
+import ChatNavbar from "../../containers/chat/ChatNavbar";
+import { Grid, List, ListItem } from "@material-ui/core";
 const useStyles = makeStyles({
-    table: {
-      minWidth: 650,
-    },
-    chatSection: {
-      width: '100%',
-      height: '80vh'
-    },
-    headBG: {
-        backgroundColor: '#e0e0e0'
-    },
-    borderRight500: {
-        borderRight: '1px solid #e0e0e0',
-  
-        backgroundColor: '#0000e0'
-    },
-    messageArea: {
-      height: '70vh',
-      overflowY: 'auto'
-    }
-  });
-const ChatComp = props => {
-    const classes = useStyles();
-    return (
-        <div>
-        <Grid container>
-            {/* <Grid item xs={12} >
+  chatSection: {
+    width: "100%",
+    height: "80vh",
+  },
+  window: {
+    border: "1px solid #cccccc",
+    borderRadius: 10,
+  },
+});
+const ChatComp = (props) => {
+  const classes = useStyles();
+  return (
+    <div>
+      <Grid container>
+        {/* <Grid item xs={12} >
                 <Typography variant="h5" className="header-message">Chat</Typography>
             </Grid> */}
-        </Grid>
-        <Grid container component={Paper} className={classes.chatSection}>
-        
-            <Conversations></Conversations>
-            <ConversationWindow></ConversationWindow>
-            
-        </Grid>
-      </div>
-    )
-}
+      </Grid>
+      <Grid container component={Paper} className={classes.chatSection}>
+        <Conversations />
+        <div className={classes.window}>
+          <List>
+            <ChatNavbar />
+            <ConversationWindow />
+          </List>
+        </div>
+      </Grid>
+    </div>
+  );
+};
 
-ChatComp.propTypes = {
+ChatComp.propTypes = {};
 
-}
-
-export default ChatComp
+export default ChatComp;

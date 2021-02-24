@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
-
-import Typography from '@material-ui/core/Typography';
+import React, { Fragment } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import green from "@material-ui/core/colors/green";
+import Typography from "@material-ui/core/Typography";
 import {
   Grid,
   List,
@@ -11,33 +10,34 @@ import {
   Divider,
   ListItemText,
   ListItemIcon,
-} from '@material-ui/core';
-import NewConversation from '../../containers/chat/NewConversation';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+} from "@material-ui/core";
+import NewConversation from "../../containers/chat/NewConversation";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 const useStyles = makeStyles({
   textColor: {
-    color: 'white',
+    color: "white",
     fontSize: 25,
     margin: 10,
   },
-  table: {
-    minWidth: 650,
-  },
-  chatSection: {
-    width: '100%',
-    height: '80vh',
-  },
-  headBG: {
-    backgroundColor: '#e0e0e0',
+  dm: {
+    color: "white",
+    fontSize: 15,
+    marginTop: 50,
+    marginLeft: 10,
   },
   borderRight500: {
-    borderRight: '1px solid white',
-    backgroundColor: '#4A154B',
+    borderRight: "1px solid white",
+    backgroundColor: "#4A154B",
     borderRadius: 10,
   },
-  messageArea: {
-    height: '70vh',
-    overflowY: 'auto',
+  hover: {
+    color: "white",
+    fontSize: 25,
+    margin: 2,
+
+    "&:hover": {
+      backgroundColor: "#a765a8",
+    },
   },
 });
 
@@ -47,16 +47,9 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
   return (
     <Fragment>
       <Grid item xs={2} className={classes.borderRight500}>
-        {/* user */}
-
-        {/* <ListItemIcon>
-              <Avatar
-                alt='Remy Sharp'
-                src='https://material-ui.com/static/images/avatar/1.jpg'
-              />
-            </ListItemIcon> */}
+        
         <Typography className={classes.textColor}>
-          {' '}
+          {" "}
           {auth.user.username}
         </Typography>
 
@@ -67,23 +60,18 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
         </Grid>
         <Divider />
 
+        <Typography className={classes.dm}>Direct Messages</Typography>
         {/* conversations */}
         {!conversations && <center></center>}
 
         <List>
-          {console.log(conversations, 'j')}
-          {/* {conversations.map(conversation => {
-            conversation.recipients = conversation.recipients.filter(
-              recipient => recipient._id !== auth.user._id
-            );
-          })} */}
           {conversations.length > 0 ? (
             conversations.map(
-              conversation =>
+              (conversation) =>
                 conversation.recipients !== undefined && (
                   <ListItem
                     button
-                    className={classes.textColor}
+                    className={classes.hover}
                     onClick={() => {
                       onClick(conversation);
                     }}
@@ -94,7 +82,7 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
                         ? conversation.recipients[1].username
                         : conversation.recipients[0].name}
                     </ListItemText>
-                    <ListItemText align='right'>
+                    <ListItemText align="right">
                       <FiberManualRecordIcon
                         style={{ fontSize: 20, color: green[500] }}
                       />
@@ -103,7 +91,7 @@ const ConversationsComp = ({ conversations, auth, onClick }) => {
                 )
             )
           ) : (
-            <h4>No conversations found...</h4>
+            <h4></h4>
           )}
         </List>
       </Grid>
