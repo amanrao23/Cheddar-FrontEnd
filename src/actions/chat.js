@@ -25,7 +25,9 @@ import {
   CLEAR_TYPING,
   CLEAR_TYPING_ERROR,
   SET_TYPING,
-  SET_TYPING_ERROR
+  SET_TYPING_ERROR,
+  READ_MESSAGE,
+  READ_MESSAGE_ERROR
 } from './types';
 
 // Load User
@@ -182,6 +184,19 @@ export const addOnline = body => async dispatch => {
     console.log(err);
     dispatch({
       type: ADD_STATUS_ERROR,
+    });
+  }
+};
+
+export const readMessage = () => async dispatch => {
+  try {
+    dispatch({
+      type: READ_MESSAGE,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: READ_MESSAGE_ERROR,
     });
   }
 };

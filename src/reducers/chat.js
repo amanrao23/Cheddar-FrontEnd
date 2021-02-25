@@ -11,8 +11,11 @@ import {
   ADD_ONLINE,
   ADD_OFFLINE,
   SET_TYPING,
-  CLEAR_TYPING
+  CLEAR_TYPING,
+  READ_MESSAGE,
 } from "../actions/types";
+
+import socket from "../socketConfig";
 
 const initialState = {
   conversations: [],
@@ -22,7 +25,7 @@ const initialState = {
   loading: true,
   notifications: [],
   onlineUser: "offline",
-  typing:null,
+  typing: null,
 };
 
 function chatReducer(state = initialState, action) {
@@ -97,25 +100,26 @@ function chatReducer(state = initialState, action) {
     case ADD_EVENT: {
       // filter if not type == new
       console.log(payload);
-      if(payload.chatRoomId===state.conversation._id){
-      if (payload.type !== "new") {
-        console.log("Edit/Delete");
-        state.events[payload.messageId - 1] = payload;
-        return {
-          ...state,
-        };
+      if (payload.chatRoomId === state.conversation._id) {
+        let chatId=payload.chatRoomId
+        socket.emit("newReadMessage", { chatId });
+        if (payload.type !== "new") {
+          console.log("Edit/Delete");
+          state.events[payload.messageId - 1] = payload;
+          return {
+            ...state,
+          };
+        } else {
+          return {
+            ...state,
+            events: [...state.events, payload],
+          };
+        }
       } else {
         return {
           ...state,
-          events: [...state.events, payload],
         };
       }
-    }
-    else{
-      return{
-        ...state,
-      }
-    }
     }
     case ADD_NOTIFICATION: {
       const notifiedConvo = state.conversations.filter(
@@ -137,6 +141,14 @@ function chatReducer(state = initialState, action) {
       return {
         ...state,
         onlineUser: payload,
+      };
+    }
+    case READ_MESSAGE: {
+      for (let i = 0; i < state.events.length; i++) {
+        state.events[i].status = "read";
+      }
+      return {
+        ...state,
       };
     }
     case SET_TYPING: {

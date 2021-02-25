@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Cheese from "../layout/Cheese";
+import CheckIcon from "@material-ui/icons/Check";
+import DoneAllIcon from "@material-ui/icons/DoneAll";
 import {
   Grid,
   List,
@@ -22,7 +24,7 @@ import SendIcon from "@material-ui/icons/Send";
 
 const useStyles = makeStyles({
   messageArea: {
-    height: "50vh",
+    height: "69vh",
     overflowY: "auto",
     border: "1px solid #f7f5f5",
   },
@@ -37,9 +39,11 @@ const useStyles = makeStyles({
     },
   },
   editButton: {
+    fontSize: 5,
     color: "green",
   },
   deleteButton: {
+    fontSize: 5,
     color: "red",
   },
 
@@ -47,6 +51,12 @@ const useStyles = makeStyles({
     position: "relative",
     top: 6,
   },
+  doubleIcon:{
+    color: "#005a9e",
+  },
+  singleCheckIcon:{
+    color: "#005a9e",
+  }
 });
 
 const ConversationWindowComp = ({
@@ -58,7 +68,7 @@ const ConversationWindowComp = ({
   formData,
   editEvent,
   deleteEvent,
-  showTyping
+  showTyping,
 }) => {
   const classes = useStyles();
   const { text } = formData;
@@ -130,6 +140,7 @@ const ConversationWindowComp = ({
                 <Grid item xs={2}>
                   {event.sender === auth.user._id && (
                     <Fragment>
+                      {event.status == "read" ? <DoneAllIcon className={classes.doubleIcon}/> : <CheckIcon className={classes.singleCheckIcon}/>}
                       <Grid container>
                         <Grid item xs={1}>
                           <ListItemText>
@@ -142,9 +153,7 @@ const ConversationWindowComp = ({
                           </ListItemText>
                         </Grid>
                         <Grid item xs={1}>
-                          <ListItemText>
-                            {" "}
-                          </ListItemText>
+                          <ListItemText>{"    "}</ListItemText>
                         </Grid>
                         <Grid item xs={1}>
                           <ListItemText>
@@ -216,48 +225,9 @@ const ConversationWindowComp = ({
                 </Grid>
               </DialogTitle>
             </Dialog>
-            {/* <ListItem key='1'>
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align='right'
-                    primary="Hey man, What's up ?"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align='right' secondary='09:30'></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem> */}
-            {/* <ListItem key='2'>
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align='left'
-                    primary='Hey, Iam Good! What about you ?'
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align='left' secondary='09:31'></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem> */}
-            {/* <ListItem key='3'>
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align='right'
-                    primary="Cool. i am good, let's catch up!"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align='right' secondary='10:30'></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem> */}
           </List>
           <Divider />
-          <Grid container >
+          <Grid container>
             <Grid item xs={11}>
               <TextField
                 id="outlined-basic-email"

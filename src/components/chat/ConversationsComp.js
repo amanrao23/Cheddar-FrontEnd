@@ -41,13 +41,12 @@ const useStyles = makeStyles({
   },
 });
 
-const ConversationsComp = ({ conversations, auth, onClick,notifications }) => {
+const ConversationsComp = ({ conversations, auth, onClick, notifications }) => {
   const classes = useStyles();
 
   return (
     <Fragment>
       <Grid item xs={2} className={classes.borderRight500}>
-        
         <Typography className={classes.textColor}>
           {" "}
           {auth.user.username}
@@ -83,9 +82,15 @@ const ConversationsComp = ({ conversations, auth, onClick,notifications }) => {
                         : conversation.recipients[0].name}
                     </ListItemText>
                     <ListItemText align="right">
-                      <FiberManualRecordIcon
-                        style={{ fontSize: 20, color: green[500] }}
-                      />
+                      {notifications.map((notification) =>
+                        notification === conversation._id ? (
+                          <FiberManualRecordIcon
+                            style={{ fontSize: 20, color: green[500], top: 6 }}
+                          />
+                        ) : (
+                          <div> </div>
+                        )
+                      )}
                     </ListItemText>
                   </ListItem>
                 )

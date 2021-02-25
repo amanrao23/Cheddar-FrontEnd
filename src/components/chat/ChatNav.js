@@ -27,8 +27,10 @@ export default function UserNav({ conversation, auth, online, typing }) {
           : conversation.recipients[0].name}
         {/* {typing===conversation._id&&<p>r</p>}
       {} */}
+      {conversation._id === typing && <Typography>typing...</Typography>}
         <Typography>
-          {online} {conversation._id === typing && <span>typing...</span>}
+        
+          {online} 
         </Typography>
       </div>
     );

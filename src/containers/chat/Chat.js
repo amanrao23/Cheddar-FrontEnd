@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import ChatComp from '../../components/chat/ChatComp';
+import React, { useEffect } from "react";
+import ChatComp from "../../components/chat/ChatComp";
 import {
   getConversations,
   addConversation,
@@ -8,10 +8,11 @@ import {
   addOnline,
   setTyping,
   clearTyping,
-} from '../../actions/chat';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import socket from '../../socketConfig';
+  readMessage,
+} from "../../actions/chat";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import socket from "../../socketConfig";
 
 const Chat = ({
   getConversations,
@@ -23,6 +24,7 @@ const Chat = ({
   addOnline,
   setTyping,
   clearTyping,
+  readMessage,
 }) => {
   const username = auth.user.username;
   const conversations = chat.conversations;
@@ -34,7 +36,7 @@ const Chat = ({
 
   useEffect(() => {
     if (auth.user.username !== undefined && conversations.length > 0) {
-      socket.emit('join', { username, conversations }, error => {
+      socket.emit("join", { username, conversations }, (error) => {
         if (error) {
           alert(error);
         }
@@ -43,8 +45,8 @@ const Chat = ({
   }, [auth, chat.conversations]);
 
   useEffect(() => {
-    console.log('Hi', chat.conversation);
-    socket.on('newEvent', ({ event }) => {
+    console.log("Hi", chat.conversation);
+    socket.on("newEvent", ({ event }) => {
       // console.log(event, "socket newMessage");
       // console.log(event._id, "eventid");
       // console.log(chat, "hey man comonnnnn");
@@ -55,22 +57,27 @@ const Chat = ({
     });
   }, [chat.conversation]);
   useEffect(() => {
-    socket.on('newConversation', ({ newConvo }) => {
-      console.log(newConvo, 'new conversation');
+    socket.on("newConversation", ({ newConvo }) => {
+      console.log(newConvo, "new conversation");
       addConversation(newConvo);
     });
   }, []);
   useEffect(() => {
-    socket.on('online', ({ userStatus }) => {
-      console.log(userStatus, 'new online id');
+    socket.on("readMessage", ({ messageStatus }) => {
+      readMessage();
+    });
+  }, []);
+  useEffect(() => {
+    socket.on("online", ({ userStatus }) => {
+      console.log(userStatus, "new online id");
       addOnline(userStatus);
     });
   }, []);
   useEffect(() => {
-    socket.on('showTyping', ({ chatRoomId }) => {
+    socket.on("showTyping", ({ chatRoomId }) => {
       // I will call it and set Timeout and call someting to clear typing
 
-      console.log('typing');
+      console.log("typing");
       setTyping(chatRoomId);
       setTimeout(() => {
         clearTyping();
@@ -80,7 +87,7 @@ const Chat = ({
   return <ChatComp />;
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   chat: state.chat,
 });
@@ -93,4 +100,5 @@ export default connect(mapStateToProps, {
   addOnline,
   setTyping,
   clearTyping,
+  readMessage,
 })(Chat);
