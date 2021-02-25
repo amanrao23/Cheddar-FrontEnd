@@ -27,6 +27,11 @@ export const ADD_ONLINE = 'ADD_ONLINE';
 export const ADD_OFFLINE = 'ADD_OFFLINE';
 export const ADD_STATUS_ERROR = 'ADD_STATUS_ERROR';
 export const ERROR_REQUEST = 'ERROR_REQUEST';
-export const GET_REQUESTS = 'GET_REQUESTS';
+export const SET_TYPING = 'SET_TYPING';
 export const CLEAR_CHAT = 'CLEAR_CHAT';
 export const REJECT_REQUEST = 'REJECT_REQUEST';
+
+export const SET_TYPING_ERROR = 'SET_TYPING_ERROR';
+
+export const CLEAR_TYPING = 'CLEAR_TYPING';
+export const CLEAR_TYPING_ERROR = 'CLEAR_TYPING_ERROR';

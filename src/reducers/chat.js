@@ -10,6 +10,8 @@ import {
   ADD_NOTIFICATION,
   ADD_ONLINE,
   ADD_OFFLINE,
+  SET_TYPING,
+  CLEAR_TYPING
 } from "../actions/types";
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
   loading: true,
   notifications: [],
   onlineUser: "offline",
+  typing:null,
 };
 
 function chatReducer(state = initialState, action) {
@@ -134,6 +137,18 @@ function chatReducer(state = initialState, action) {
       return {
         ...state,
         onlineUser: payload,
+      };
+    }
+    case SET_TYPING: {
+      return {
+        ...state,
+        typing: payload,
+      };
+    }
+    case CLEAR_TYPING: {
+      return {
+        ...state,
+        typing: null,
       };
     }
     case CLEAR_CHAT: {

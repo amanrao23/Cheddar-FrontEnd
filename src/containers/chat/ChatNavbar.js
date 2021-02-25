@@ -7,6 +7,7 @@ function ChatNavbar({ chat, auth }) {
       conversation={chat.conversation}
       auth={auth}
       online={chat.onlineUser}
+      typing={chat.typing}
     />
   );
 }

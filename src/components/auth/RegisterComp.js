@@ -143,7 +143,7 @@ export default function Register({ formData, onChange, onSubmit, user }) {
             <Grid container justify="flex-end">
               <Grid item>
                  
-                  <Link href="/loginUser" variant="body2">
+                  <Link href="/login" variant="body2">
                     {"Already have an account? Sign In"}
                   </Link>
                 

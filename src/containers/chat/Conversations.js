@@ -18,6 +18,7 @@ function Conversations({ chat, auth, setConversation, getEvents }) {
       conversations={chat.conversations}
       auth={auth}
       onClick={onClick}
+      notifications={chat.notifications}
     />
   );
 }

@@ -22,7 +22,7 @@ import SendIcon from "@material-ui/icons/Send";
 
 const useStyles = makeStyles({
   messageArea: {
-    height: "68vh",
+    height: "50vh",
     overflowY: "auto",
     border: "1px solid #f7f5f5",
   },
@@ -58,6 +58,7 @@ const ConversationWindowComp = ({
   formData,
   editEvent,
   deleteEvent,
+  showTyping
 }) => {
   const classes = useStyles();
   const { text } = formData;
@@ -256,7 +257,7 @@ const ConversationWindowComp = ({
             </ListItem> */}
           </List>
           <Divider />
-          <Grid container style={{ paddingTop: "1%" }}>
+          <Grid container >
             <Grid item xs={11}>
               <TextField
                 id="outlined-basic-email"
@@ -264,6 +265,7 @@ const ConversationWindowComp = ({
                 fullWidth
                 value={text}
                 onChange={onChange}
+                onKeyPress={showTyping}
               ></TextField>
             </Grid>
             <Grid xs={1} align="right">

@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ConversationsComp = ({ conversations, auth, onClick }) => {
+const ConversationsComp = ({ conversations, auth, onClick,notifications }) => {
   const classes = useStyles();
 
   return (

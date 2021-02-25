@@ -1,7 +1,7 @@
 // import api from '../utils/api';
-import axios from "axios";
+import axios from 'axios';
 
-import { setAlert } from "./alert";
+import { setAlert } from './alert';
 import {
   GET_CONVERSATIONS,
   GET_CONVERSATIONS_ERROR,
@@ -21,52 +21,54 @@ import {
   ADD_NOTIFICATION_ERROR,
   ADD_ONLINE,
   ADD_OFFLINE,
-  ADD_STATUS_ERROR
-
-
-} from "./types";
+  ADD_STATUS_ERROR,
+  CLEAR_TYPING,
+  CLEAR_TYPING_ERROR,
+  SET_TYPING,
+  SET_TYPING_ERROR
+} from './types';
 
 // Load User
-export const getConversations = () => async (dispatch) => {
+export const getConversations = () => async dispatch => {
   try {
-    const res = await axios.get("/api/user/conversations");
-    console.log("load_user()", res.data);
+    const res = await axios.get('/api/user/conversations');
+    console.log('load_user()', res.data);
     dispatch({
       type: GET_CONVERSATIONS,
       payload: res.data,
     });
   } catch (err) {
-    console.log("Load_use()", err);
+    console.log('Load_use()', err);
     dispatch({
       type: GET_CONVERSATIONS_ERROR,
     });
   }
 };
 
-export const newConversation = (body) => async (dispatch) => {
+export const newConversation = body => async dispatch => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
   try {
-    const res = await axios.post("/api/user/newConversation", body, config);
+    const res = await axios.post('/api/user/newConversation', body, config);
 
-    console.log("load_user()", res.data);
+    console.log('load_user()', res.data);
     dispatch({
       type: NEW_CONVERSATION,
       payload: res.data,
     });
   } catch (err) {
-    console.log("Load_use()", err);
+    console.log('Load_use()', err);
     dispatch({
       type: NEW_CONVERSATION_ERROR,
     });
   }
 };
 
-export const setConversation = (conversation) => async (dispatch) => {
+export const setConversation = conversation => async dispatch => {
   try {
     dispatch({
       type: SET_CONVERSATION,
@@ -80,18 +82,18 @@ export const setConversation = (conversation) => async (dispatch) => {
   }
 };
 
-export const getEvents = (chatId,username) => async (dispatch) => {
+export const getEvents = (chatId, username) => async dispatch => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   const timestamp = null;
-  const body = { chatRoomId: chatId, timestamp: timestamp, username:username};
+  const body = { chatRoomId: chatId, timestamp: timestamp, username: username };
   console.log(body);
 
   try {
-    const res = await axios.post("/api/event/getEvents", body, config);
+    const res = await axios.post('/api/event/getEvents', body, config);
     console.log(res.data);
     dispatch({
       type: GET_EVENTS,
@@ -105,15 +107,15 @@ export const getEvents = (chatId,username) => async (dispatch) => {
   }
 };
 
-export const newEvent = (body) => async (dispatch) => {
+export const newEvent = body => async dispatch => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
-  console.log(body, "In newEvent jiiiiiiiiiiii");
+  console.log(body, 'In newEvent jiiiiiiiiiiii');
   try {
-    const res = await axios.post("/api/event/newEvent", body, config);
+    const res = await axios.post('/api/event/newEvent', body, config);
     //socket event
 
     dispatch({
@@ -128,8 +130,8 @@ export const newEvent = (body) => async (dispatch) => {
   }
 };
 
-export const addConversation = (body) => async (dispatch) => {
-  console.log("In add Conversation ");
+export const addConversation = body => async dispatch => {
+  console.log('In add Conversation ');
   try {
     dispatch({
       type: ADD_CONVERSATION,
@@ -142,7 +144,7 @@ export const addConversation = (body) => async (dispatch) => {
     });
   }
 };
-export const addEvent = (body) => async (dispatch) => {
+export const addEvent = body => async dispatch => {
   try {
     dispatch({
       type: ADD_EVENT,
@@ -156,8 +158,7 @@ export const addEvent = (body) => async (dispatch) => {
   }
 };
 
-
-export const addNotification = (body) => async (dispatch) => {
+export const addNotification = body => async dispatch => {
   try {
     dispatch({
       type: ADD_NOTIFICATION,
@@ -171,7 +172,7 @@ export const addNotification = (body) => async (dispatch) => {
   }
 };
 
-export const addOnline = (body) => async (dispatch) => {
+export const addOnline = body => async dispatch => {
   try {
     dispatch({
       type: ADD_ONLINE,
@@ -185,7 +186,7 @@ export const addOnline = (body) => async (dispatch) => {
   }
 };
 
-export const addOffline = (body) => async (dispatch) => {
+export const addOffline = body => async dispatch => {
   try {
     dispatch({
       type: ADD_OFFLINE,
@@ -199,3 +200,29 @@ export const addOffline = (body) => async (dispatch) => {
   }
 };
 
+export const setTyping = chatRoomId => async dispatch => {
+  try {
+    dispatch({
+      type: SET_TYPING,
+      payload: chatRoomId,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: SET_TYPING_ERROR,
+    });
+  }
+};
+export const clearTyping = chatRoomId => async dispatch => {
+  try {
+    dispatch({
+      type: CLEAR_TYPING,
+      payload: chatRoomId,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: CLEAR_TYPING_ERROR,
+    });
+  }
+};

@@ -106,7 +106,7 @@ export default function Login({  isAuthenticated,formData,onChange,onSubmit }) {
             <Grid container>
               <Grid item>
                  
-                  <Link href="/registerUser" variant="body2">
+                  <Link href="/register" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 
