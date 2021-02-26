@@ -1,0 +1,16 @@
+.action {
+    visibility:hidden;
+  }
+  .message_area{
+    padding: 2%;
+    margin-right: 10%;
+    margin-top: 1%;
+  }
+.message_area:hover {
+    background-color: #f7f5f5;
+  }
+.message_area:hover .action {
+
+    visibility:visible ;
+   
+}
