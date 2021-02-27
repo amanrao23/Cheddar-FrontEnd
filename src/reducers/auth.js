@@ -5,12 +5,11 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGOUT,
-  
- 
-} from '../actions/types';
+} from "../actions/types";
 
+import socket from "../socketConfig";
 const initialState = {
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem("token"),
   isAuthenticated: null,
   loading: true,
   user: null,
@@ -26,28 +25,29 @@ function authReducer(state = initialState, action) {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: payload
+        user: payload,
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem('token',payload.token)
+      localStorage.setItem("token", payload.token);
       return {
         ...state,
-        ...payload,// We need to why this works
+        ...payload, // We need to why this works
         isAuthenticated: true,
         loading: false,
-        user: payload
+        user: payload,
       };
-    
+
     case AUTH_ERROR:
     case LOGOUT:
-      localStorage.removeItem('token')
+      localStorage.removeItem("token");
+      socket.emit("logout");
       return {
         ...state,
         token: null,
         isAuthenticated: false,
         loading: false,
-        user: null
+        user: null,
       };
     default:
       return state;

@@ -6,6 +6,7 @@ import GuestNav from "../../components/layout/GuestNav";
 import UserNav from "../../components/layout/UserNav";
 
 const Navbar = ({ isAuthenticated, logout }) => {
+  
   return (
     <Fragment>
       {isAuthenticated ? (

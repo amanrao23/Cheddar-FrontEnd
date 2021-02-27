@@ -24,7 +24,7 @@ const NewConversationComp = ({ formData, onChange, onSubmit }) => {
 
   return (
     <div>
-      {/* <form noValidate onSubmit={onSubmit}> */}
+       <form noValidate onSubmit={onSubmit}>
       <Grid container>
         <Grid item xs={8} >
           <TextField
@@ -42,7 +42,7 @@ const NewConversationComp = ({ formData, onChange, onSubmit }) => {
           </Button>
         </Grid>
       </Grid>
-      {/* </form> */}
+      </form>
     </div>
   );
 };
