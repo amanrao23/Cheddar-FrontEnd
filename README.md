@@ -3,12 +3,14 @@
 
 <!-- > This note is yours, feel free to play around.  :video_game: 
 > Type on the left :arrow_left: and see the rendered result on the right. :arrow_right:  -->
+## :memo: Demo
+
+https://user-images.githubusercontent.com/54672230/109388794-469c3c00-792f-11eb-9cbd-0a55cbbdd76e.mp4
 
 
 ## :memo: Introduction
 
-### The aim of this project is to build a functional real-time messaging application by using modern web technologies.
-
+### The aim of this project is to build a functional real-time messaging application using MERN stack. This is the frontend of the project. Find backend of the project [here](https://github.com/amanrao23/Cheddar-backEnd).
 
 <!-- 
 
